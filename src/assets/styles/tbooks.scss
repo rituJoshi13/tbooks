@@ -81,10 +81,8 @@ main.auth{
         width:15em;
     }
     .google-signin{
-        //border:1px solid #DB4437;
-        //color:#DB4437;
+        
         margin-top:1em;
-       
         background:#DB4437;
     }
 }
@@ -103,7 +101,6 @@ main.auth{
 .logo{
     @include flexy(); 
     padding-bottom:1.25em;
-  
 }
 .body-wrapper{
     @include flexy(column,flex-start,flex-start);
@@ -113,7 +110,7 @@ main.auth{
     display:block;
     margin:0 auto;
     width:80%;
-   padding:1em 0;
+    padding:1em 0;
     border-bottom:1px solid rgb(231, 231, 231);
     span{
         position:absolute;
@@ -137,8 +134,11 @@ main.auth{
 .group-container{
     @include flexy(null,null,null,null,0.25em);
 }
+.form{
+    @include flexy(column);
+}
 @media screen and ( min-height: 550px ) { 
     main.auth{
         height:100%;
     }
- }
+}
