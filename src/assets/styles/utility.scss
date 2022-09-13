@@ -1,0 +1,34 @@
+.full-length{
+   
+    width:100%;
+    height:100%
+}
+.mr-1em{
+    margin-right:1em !important;
+}
+@mixin flexy($direction: null,$alignItems: null,$justifyContent: null,$width: null,$gap:null) {
+    display:flex;
+    @if ($direction) {
+        flex-direction:$direction;
+    } @else{
+        flex-direction:row;
+    }
+    @if ($alignItems) {
+        align-items:$alignItems;
+    } @else{
+        align-items:center;
+    }
+    @if ($justifyContent) {
+        justify-content: $justifyContent;
+    } @else{
+        justify-content:center;
+    }
+    @if ($width) {
+        width:$width;
+      } @else{
+        width:100%;
+      }
+      @if ($gap) {
+        gap:$gap;
+      } 
+}
