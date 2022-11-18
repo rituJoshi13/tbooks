@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { VendorsComponent } from './vendors/vendors.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { AgGridModule } from 'ag-grid-angular';
     FormsModule,  
     ReactiveFormsModule,
     AgGridModule,
+    NgbModule,
     
   ],
   providers: [],

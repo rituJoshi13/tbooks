@@ -8,7 +8,7 @@
       <div class="vendor-body">
         <div class="head-vendor">
           <h2>All Vendors</h2>
-          <button class="orange-button">Add Vendor</button>
+          <button class="orange-button" (click)="open(content)">Add Vendor</button>
         </div>
 
         <!--<div class="body-wrapper">
@@ -95,17 +95,63 @@
     </div>
   </section>
 </main>
-<ng-template #mymodal let-modal>
+<ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">×</span>
-    </button>
+    <h2 class="modal-title" id="modal-basic-title"><strong>Vendor</strong> Profile</h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
-  <div class="modal-body">This is example from ItSolutionStuff.com</div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">
-      Ok
-    </button>
+  <div class="modal-body">
+    <form
+      class="form"
+      #vendorProfileForm="ngForm"
+      (ngSubmit)="vendorProfileForm.form.valid && onSubmit()"
+      novalidate
+    >
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="vendorProfileModel.vendorName"
+          name="vendorName"
+          #vendorName="ngModel"
+          required
+          placeholder="Vendor Name"
+        />
+        <span class="text-danger" *ngIf="vendorName.touched || vendorProfileForm.submitted">
+          Vendor name is required
+        </span>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="vendorProfileModel.GstNumber"
+          name="gstNumber"
+          #gstNumber="ngModel"
+          required
+          placeholder="GST Number"
+        />
+        <span class="text-danger" *ngIf="gstNumber.touched || vendorProfileForm.submitted">
+          GST number is required
+        </span>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="vendorProfileModel.state"
+          name="state"
+          #state="ngModel"
+          required
+          placeholder="State"
+        />
+        <span class="text-danger" *ngIf="state.touched || vendorProfileForm.submitted">
+          State is required
+        </span>
+      </div>
+      <div class="btn-container">
+        <button type="submit" class="mr-1em">Done</button>
+      </div>
+    </form>
   </div>
 </ng-template>
