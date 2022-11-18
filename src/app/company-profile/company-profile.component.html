@@ -1,0 +1,132 @@
+<main class="auth">
+  <section class="right-side mobile-bgfix">
+    <div class="auth-logo-mobile">
+      <img src="../../assets/images/main-logo.png" class="" />
+    </div>
+
+    <div class="right-side-inner">
+      <h2><strong>Company</strong> Profile</h2>
+      <form
+        class="form"
+        #companyProfileForm="ngForm"
+        (ngSubmit)="companyProfileForm.form.valid && onSubmit()"
+        novalidate
+      >
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="companyProfileModel.companyName"
+            name="companyName"
+            #companyName="ngModel"
+            required
+            placeholder="Company name"
+          />
+          <span class="text-danger" *ngIf="companyName.touched || companyProfileForm.submitted">
+            Company name is required
+          </span>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="companyProfileModel.streetAddress"
+            name="streetAddress"
+            #streetAddress="ngModel"
+            required
+            placeholder="Street address"
+          />
+          <span class="text-danger" *ngIf="streetAddress.touched || companyProfileForm.submitted">
+            Street address is required
+          </span>
+        </div>
+        <div class="group-container">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="companyProfileModel.city"
+              name="city"
+              #city="ngModel"
+              required
+              placeholder="City"
+            />
+            <span class="text-danger" *ngIf="city.touched || companyProfileForm.submitted">
+              City is required
+            </span>
+          </div>
+
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="companyProfileModel.state"
+              name="state"
+              #state="ngModel"
+              required
+              placeholder="State"
+            />
+            <span class="text-danger" *ngIf="state.touched || companyProfileForm.submitted">
+              State is required
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="companyProfileModel.companyEmail"
+            name="email"
+            #email="ngModel"
+            required
+            email
+            placeholder="Email"
+          />
+          <span
+            class="text-danger"
+            *ngIf="(email.touched || companyProfileForm.submitted) && email.errors?.required"
+          >
+            Company email is required
+          </span>
+          <span class="text-danger" *ngIf="email.touched && email.errors?.email">
+            Enter a valid Company email
+          </span>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="companyProfileModel.mobileNumber"
+            name="mobileNumber"
+            #mobileNumber="ngModel"
+            required
+            placeholder="Mobile number"
+          />
+          <span class="text-danger" *ngIf="mobileNumber.touched || companyProfileForm.submitted">
+            Mobile number is required
+          </span>
+        </div>
+        <div class="footer-text">
+          <p>
+            By signing in you are agreeing to our <a href="#">Terms & Conditions</a> and
+            <a href="#">Privacy Policy</a>
+          </p>
+        </div>
+        <div class="btn-container">
+          <button type="submit" class="mr-1em">Done</button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <section class="left-side">
+    <img src="../../assets/images/main-logo.png" class="auth-logo" />
+    <p class="hero-text"><strong>One solution</strong> to all your accounting requirements</p>
+    <img src="../../assets/images/hero-image.png" class="hero-image" />
+    <p class="small-text">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae volutpat tortor. Fusce
+      sit amet tincidunt tellus. Mauris tincidunt consectetur felis eu volutpat. In aliquam justo ac
+      dolor vulputate tempus.
+    </p>
+  </section>
+</main>

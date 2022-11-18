@@ -9,6 +9,11 @@ import { PasswordPatternDirective } from './directives/password-pattern.directiv
 import { MatchPasswordDirective } from './directives/match-password.directive';
 import { ValidateUserNameDirective } from './directives/validate-user-name.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { VendorsComponent } from './vendors/vendors.component';
+import { AgGridModule } from 'ag-grid-angular';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,13 +21,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RegisterComponent,
     PasswordPatternDirective,
     MatchPasswordDirective,
-    ValidateUserNameDirective
+    ValidateUserNameDirective,
+    CompanyProfileComponent,
+    VendorsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,  
-    ReactiveFormsModule 
+    ReactiveFormsModule,
+    AgGridModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

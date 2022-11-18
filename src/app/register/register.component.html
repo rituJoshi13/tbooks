@@ -1,12 +1,21 @@
 <main class="auth">
-  <div class="card">
-    <!--<div class="head-logo">
-        <img src="../../assets/images/icon-logo.svg" />
-      </div>-->
-    <div class="body-wrapper">
-      <div class="logo">
-        <img src="../../assets/images/full-logo.svg" />
-      </div>
+  <section class="left-side">
+    <img src="../../assets/images/main-logo.png" class="auth-logo" />
+    <p class="hero-text"><strong>One solution</strong> to all your accounting requirements</p>
+    <img src="../../assets/images/hero-image.png" class="hero-image" />
+    <p class="small-text">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae volutpat tortor. Fusce
+      sit amet tincidunt tellus. Mauris tincidunt consectetur felis eu volutpat. In aliquam justo ac
+      dolor vulputate tempus.
+    </p>
+  </section>
+  <section class="right-side mobile-bgfix">
+    <div class="auth-logo-mobile">
+      <img src="../../assets/images/main-logo.png" class="" />
+    </div>
+
+    <div class="right-side-inner">
+      <h2>Sign up to <strong>tbooks</strong></h2>
       <form
         class="form"
         #registerForm="ngForm"
@@ -16,7 +25,6 @@
       >
         <div class="group-container">
           <div class="form-group">
-            <label for="firstName">First name</label>
             <input
               type="text"
               class="form-control"
@@ -24,6 +32,7 @@
               name="firstName"
               #firstName="ngModel"
               required
+              placeholder="First name"
             />
             <span
               class="text-danger"
@@ -33,7 +42,6 @@
             </span>
           </div>
           <div class="form-group">
-            <label for="lastName">Last name</label>
             <input
               type="text"
               class="form-control"
@@ -41,6 +49,7 @@
               name="lastName"
               #lastName="ngModel"
               required
+              placeholder="Last name"
             />
             <span
               class="text-danger"
@@ -51,7 +60,6 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="email">Email</label>
           <input
             type="text"
             class="form-control"
@@ -60,6 +68,7 @@
             #email="ngModel"
             required
             email
+            placeholder="Email"
           />
           <span
             class="text-danger"
@@ -73,7 +82,6 @@
         </div>
         <div class="group-container">
           <div class="form-group">
-            <label for="userPassword">Password</label>
             <input
               type="password"
               class="form-control"
@@ -82,6 +90,7 @@
               #userPassword="ngModel"
               appPasswordPattern
               required
+              placeholder="Password"
             />
             <span
               class="text-danger"
@@ -100,7 +109,6 @@
             </span>
           </div>
           <div class="form-group">
-            <label for="userConfirmPassword">Confirm Password</label>
             <input
               type="password"
               class="form-control"
@@ -108,6 +116,7 @@
               name="userConfirmPassword"
               #userConfirmPassword="ngModel"
               required
+              placeholder="Confirm Password"
             />
             <span
               class="text-danger"
@@ -129,14 +138,16 @@
         <div class="btn-container">
           <button type="submit" class="mr-1em">Sign up</button>
         </div>
+        <div class="seprater">
+          <span>or </span>
+        </div>
+        <button class="google-signin">
+          <img src="../../assets/images/btn-sign-in-google.png" />
+        </button>
+        <div class="footer-text">
+          <p>Already have an account yet? <a href="#">Sign In</a></p>
+        </div>
       </form>
-      <div class="seprater">
-        <span>or sign up with</span>
-      </div>
-      <div class="btn-container">
-        <button class="google-signin">Google</button>
-      </div>
     </div>
-    <p class="link-signed">Alreaady have an account? &nbsp;<a href="/login">Sign in now</a></p>
-  </div>
+  </section>
 </main>
