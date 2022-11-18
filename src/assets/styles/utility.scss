@@ -57,6 +57,7 @@ button,button:focus{
 .text-danger {
     font-size: 11px;
     padding:5px 0 0 12px;
+    color:#d9161c;
 }
 @function rem($pxValue) {
     @return math.div($pxValue, 16px) * 1rem; 
