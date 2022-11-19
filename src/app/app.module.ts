@@ -13,7 +13,9 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
 import { VendorsComponent } from './vendors/vendors.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { HomeComponent } from './home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatchPasswordDirective,
     ValidateUserNameDirective,
     CompanyProfileComponent,
-    VendorsComponent
+    VendorsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     AgGridModule,
     NgbModule,
-    
+    BrowserAnimationsModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

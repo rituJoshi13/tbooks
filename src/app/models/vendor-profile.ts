@@ -3,3 +3,6 @@ export class VendorProfileModel {
     public GstNumber?: string;
     public state?: string;
 }
+export class AddLedgerModel {
+    public ledgerName?: string;
+}

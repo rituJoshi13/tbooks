@@ -1,84 +1,20 @@
-<main class="vendors">
-  <section class="vendor-wrapper">
-    <div class="vendor-header">
-      <img src="../../assets/images/main-logo.png" class="auth-logo" />
-      <h1>Apollo Infotech</h1>
+<main class="home">
+  <div class="home-head">
+    <div class="home-head-inner">
+      <div class="head-left">
+        <img src="../../assets/images/main-logo.png" class="home-logo" />
+        <h3>Apollo Infotech</h3>
+      </div>
     </div>
-    <div class="vendor-wrap">
+  </div>
+  <div class="home-body">
+    <div class="home-body-inner">
       <div class="vendor-body">
         <div class="head-vendor">
           <h2>All Vendors</h2>
           <button class="orange-button" (click)="open(content)">Add Vendor</button>
         </div>
 
-        <!--<div class="body-wrapper">
-          <div class="body-inner">
-            <div class="body-header">
-              <h3>Hexagonal Creatives</h3>
-              <span>GST :2443435454 | Gujarat</span>
-            </div>
-            <div class="body-info">
-              <a class="body-info-wrapper">
-                <span>Total Ledger</span>
-                <p>13</p>
-              </a>
-              <div class="seprater"></div>
-              <a class="body-info-wrapper">
-                <span>Pending Files</span>
-                <p>13</p>
-              </a>
-            </div>
-            <div class="body-footer">
-              <a href="#">Edit Vendor</a>
-              <a href="#">Delete Vendor</a>
-              <a href="#">Generate XML</a>
-            </div>
-          </div>
-          <div class="body-inner">
-            <div class="body-header">
-              <h3>Hexagonal Creatives</h3>
-              <span>GST :2443435454 | Gujarat</span>
-            </div>
-            <div class="body-info">
-              <a class="body-info-wrapper">
-                <span>Total Ledger</span>
-                <p>13</p>
-              </a>
-              <div class="seprater"></div>
-              <a class="body-info-wrapper">
-                <span>Pending Files</span>
-                <p>13</p>
-              </a>
-            </div>
-            <div class="body-footer">
-              <a href="#">Edit Vendor</a>
-              <a href="#">Delete Vendor</a>
-              <a href="#">Generate XML</a>
-            </div>
-          </div>
-          <div class="body-inner">
-            <div class="body-header">
-              <h3>Hexagonal Creatives</h3>
-              <span>GST :2443435454 | Gujarat</span>
-            </div>
-            <div class="body-info">
-              <a class="body-info-wrapper">
-                <span>Total Ledger</span>
-                <p>13</p>
-              </a>
-              <div class="seprater"></div>
-              <a class="body-info-wrapper">
-                <span>Pending Files</span>
-                <p>13</p>
-              </a>
-            </div>
-            <div class="body-footer">
-              <a href="#">Edit Vendor</a>
-              <a href="#">Delete Vendor</a>
-              <a href="#">Generate XML</a>
-            </div>
-          </div>
-        </div>-->
         <div class="grid-wrapper">
           <ag-grid-angular
             style="width: 100%; height: 100%"
@@ -93,8 +29,9 @@
         <p>&copy; All rights reserved. tbooks.com</p>
       </div>
     </div>
-  </section>
+  </div>
 </main>
+
 <ng-template #content let-modal>
   <div class="modal-header">
     <h2 class="modal-title" id="modal-basic-title"><strong>Vendor</strong> Profile</h2>
@@ -150,7 +87,7 @@
         </span>
       </div>
       <div class="btn-container">
-        <button type="submit" class="mr-1em">Done</button>
+        <button type="submit" class="orange-button">Done</button>
       </div>
     </form>
   </div>

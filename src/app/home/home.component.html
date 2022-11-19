@@ -1,0 +1,94 @@
+<main class="home">
+  <div class="home-head">
+    <div class="home-head-inner">
+      <div class="head-left">
+        <img src="../../assets/images/main-logo.png" class="home-logo" />
+        <h3>Apollo Infotech</h3>
+      </div>
+      <div class="head-right">
+        <div class="select-wrapper">
+          <select>
+            <option>Shyam Digital</option>
+            <option>Apollo Infotech</option>
+          </select>
+        </div>
+        <div class="user-info-wrapper">
+          <span class="material-icons">person</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="home-body">
+    <div class="home-body-inner">
+      <div class="vendor-body">
+        <mat-tab-group mat-stretch-tabs="true" mat-align-tabs="start">
+          <mat-tab label="Manage Ledger">
+            <div class="tabs-wrapper">
+              <div class="no-items" style="display: none">
+                <img src="../../assets/images/no-item-found.png" />
+                <p>No Ledger found!</p>
+                <div class="button-container">
+                  <button class="orange-button">Import Excel</button>
+                  <button class="orange-button">Add Ledger</button>
+                </div>
+              </div>
+              <div class="any-item">
+                <div class="button-container">
+                  <button class="orange-button">Import Excel</button>
+                  <button class="orange-button" (click)="open(content)">Add Ledger</button>
+                </div>
+                <div class="grid-wrapper">
+                  <ag-grid-angular
+                    style="width: 100%; height: 100%"
+                    class="ag-theme-alpine"
+                    [columnDefs]="columnDefs"
+                    [rowData]="rowData"
+                    autoSizeAllColumns="true"
+                  ></ag-grid-angular>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Generate XML">Content 2</mat-tab>
+          <mat-tab label="Pending Documents">Content 3</mat-tab>
+        </mat-tab-group>
+      </div>
+      <div class="vendor-footer">
+        <p>&copy; All rights reserved. tbooks.com</p>
+      </div>
+    </div>
+  </div>
+</main>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title"><strong>Add</strong> Ledger</h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form
+      class="form"
+      #addLedgerForm="ngForm"
+      (ngSubmit)="addLedgerForm.form.valid && onSubmit()"
+      novalidate
+    >
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="addLedgerModel.ledgerName"
+          name="ledgerName"
+          #ledgerName="ngModel"
+          required
+          placeholder="Ledger Name"
+        />
+        <span class="text-danger" *ngIf="ledgerName.touched || addLedgerForm.submitted">
+          Ledger Name is required
+        </span>
+      </div>
+
+      <div class="btn-container">
+        <button type="submit" class="orange-button">Done</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
