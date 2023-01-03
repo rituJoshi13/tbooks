@@ -1,3 +1,5 @@
+import { AuthGuard } from './services/auth.guard';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -16,6 +18,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
+import {HttpClientModule} from "@angular/common/http";
+import { AuthService } from './services/auth.service';
+import { TokenStorageService } from './services/token-storage.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LoaderComponent } from './loader/loader.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { CompanyAuthGuard } from './services/company-auth.guard';
+import { LoginAuthGuard } from './services/login-auth.guard';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +38,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     ValidateUserNameDirective,
     CompanyProfileComponent,
     VendorsComponent,
-    HomeComponent
+    HomeComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -38,8 +50,18 @@ import { MatTabsModule } from '@angular/material/tabs';
     NgbModule,
     BrowserAnimationsModule,
     MatTabsModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    TokenStorageService,
+    AuthGuard,
+    CompanyAuthGuard,
+    LoginAuthGuard,
+ 
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

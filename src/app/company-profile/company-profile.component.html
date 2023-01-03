@@ -22,7 +22,12 @@
             required
             placeholder="Company name"
           />
-          <span class="text-danger" *ngIf="companyName.touched || companyProfileForm.submitted">
+          <span
+            class="text-danger"
+            *ngIf="
+              (companyName.touched || companyProfileForm.submitted) && companyName.errors?.required
+            "
+          >
             Company name is required
           </span>
         </div>
@@ -36,7 +41,13 @@
             required
             placeholder="Street address"
           />
-          <span class="text-danger" *ngIf="streetAddress.touched || companyProfileForm.submitted">
+          <span
+            class="text-danger"
+            *ngIf="
+              (streetAddress.touched || companyProfileForm.submitted) &&
+              streetAddress.errors?.required
+            "
+          >
             Street address is required
           </span>
         </div>
@@ -51,7 +62,10 @@
               required
               placeholder="City"
             />
-            <span class="text-danger" *ngIf="city.touched || companyProfileForm.submitted">
+            <span
+              class="text-danger"
+              *ngIf="(city.touched || companyProfileForm.submitted) && city.errors?.required"
+            >
               City is required
             </span>
           </div>
@@ -66,7 +80,10 @@
               required
               placeholder="State"
             />
-            <span class="text-danger" *ngIf="state.touched || companyProfileForm.submitted">
+            <span
+              class="text-danger"
+              *ngIf="(state.touched || companyProfileForm.submitted) && state.errors?.required"
+            >
               State is required
             </span>
           </div>
@@ -76,12 +93,12 @@
           <input
             type="text"
             class="form-control"
-            [(ngModel)]="companyProfileModel.companyEmail"
+            disabled="true"
+            [(ngModel)]="companyProfileModel.email"
             name="email"
             #email="ngModel"
             required
             email
-            placeholder="Email"
           />
           <span
             class="text-danger"
@@ -97,13 +114,19 @@
           <input
             type="text"
             class="form-control"
-            [(ngModel)]="companyProfileModel.mobileNumber"
+            [(ngModel)]="companyProfileModel.mobile"
             name="mobileNumber"
             #mobileNumber="ngModel"
             required
             placeholder="Mobile number"
           />
-          <span class="text-danger" *ngIf="mobileNumber.touched || companyProfileForm.submitted">
+          <span
+            class="text-danger"
+            *ngIf="
+              (mobileNumber.touched || companyProfileForm.submitted) &&
+              mobileNumber.errors?.required
+            "
+          >
             Mobile number is required
           </span>
         </div>

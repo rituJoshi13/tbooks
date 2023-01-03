@@ -85,7 +85,7 @@
             <input
               type="password"
               class="form-control"
-              [(ngModel)]="registerModal.userPassword"
+              [(ngModel)]="registerModal.password"
               name="userPassword"
               #userPassword="ngModel"
               appPasswordPattern
@@ -112,7 +112,7 @@
             <input
               type="password"
               class="form-control"
-              [(ngModel)]="registerModal.userConfirmPassword"
+              [(ngModel)]="confirmPassword"
               name="userConfirmPassword"
               #userConfirmPassword="ngModel"
               required
@@ -145,7 +145,7 @@
           <img src="../../assets/images/btn-sign-in-google.png" />
         </button>
         <div class="footer-text">
-          <p>Already have an account yet? <a href="#">Sign In</a></p>
+          <p>Already have an account yet? <a [routerLink]="['']">Sign In</a></p>
         </div>
       </form>
     </div>

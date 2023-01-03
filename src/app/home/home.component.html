@@ -34,15 +34,21 @@
               </div>
               <div class="any-item">
                 <div class="button-container">
-                  <button class="orange-button">Import Excel</button>
+                  <!-- <button class="orange-button" (click)="importExcel()">Import Excel</button>-->
+                  <div class="import-wrapper">
+                    <label for="file-upload" class="orange-button"> Import Excel </label>
+                    <input id="file-upload" type="file" #file (change)="importExcel($event)" />
+                  </div>
                   <button class="orange-button" (click)="open(content)">Add Ledger</button>
                 </div>
                 <div class="grid-wrapper">
                   <ag-grid-angular
                     style="width: 100%; height: 100%"
                     class="ag-theme-alpine"
-                    [columnDefs]="columnDefs"
                     [rowData]="rowData"
+                    [gridOptions]="gridOptions"
+                    [modules]="modules"
+                    (gridReady)="onGridReady($event)"
                     autoSizeAllColumns="true"
                   ></ag-grid-angular>
                 </div>
@@ -50,7 +56,7 @@
             </div>
           </mat-tab>
           <mat-tab label="Generate XML">Content 2</mat-tab>
-          <mat-tab label="Pending Documents">Content 3</mat-tab>
+          <mat-tab label="Pending Documents"> </mat-tab>
         </mat-tab-group>
       </div>
       <div class="vendor-footer">

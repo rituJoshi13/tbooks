@@ -1,0 +1,14 @@
+input[type="file"] {
+    display: none;
+}
+.import-wrapper{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.orange-button{
+    display:flex;
+    align-items: center;
+    cursor:pointer;
+}

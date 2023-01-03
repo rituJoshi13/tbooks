@@ -1,6 +1,6 @@
 export class VendorProfileModel {
     public vendorName?: string;
-    public GstNumber?: string;
+    public gstNumber?: string;
     public state?: string;
 }
 export class AddLedgerModel {
