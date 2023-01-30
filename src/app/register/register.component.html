@@ -28,15 +28,15 @@
             <input
               type="text"
               class="form-control"
-              [(ngModel)]="registerModal.firstName"
-              name="firstName"
-              #firstName="ngModel"
+              [(ngModel)]="registerModal.firstname"
+              name="firstname"
+              #firstname="ngModel"
               required
               placeholder="First name"
             />
             <span
               class="text-danger"
-              *ngIf="(firstName.touched || registerForm.submitted) && firstName.errors?.required"
+              *ngIf="(firstname.touched || registerForm.submitted) && firstname.errors?.required"
             >
               Name is required
             </span>
@@ -45,15 +45,15 @@
             <input
               type="text"
               class="form-control"
-              [(ngModel)]="registerModal.lastName"
-              name="lastName"
-              #lastName="ngModel"
+              [(ngModel)]="registerModal.lastname"
+              name="lastname"
+              #lastname="ngModel"
               required
               placeholder="Last name"
             />
             <span
               class="text-danger"
-              *ngIf="(lastName.touched || registerForm.submitted) && lastName.errors?.required"
+              *ngIf="(lastname.touched || registerForm.submitted) && lastname.errors?.required"
             >
               Name is required
             </span>

@@ -1,14 +1,14 @@
 export class Register {
-    public firstName?: string;
-    public lastName?: string;
+    public firstname?: string;
+    public lastname?: string;
     public email?: string;
     public password?: string;
     public companyId:string;
    // public userConfirmPassword?: string;
     
     public Register(registerUser:Register){
-        this.firstName = registerUser.firstName;
-        this.lastName = registerUser.lastName;
+        this.firstname = registerUser.firstname;
+        this.firstname = registerUser.firstname;
         this.email = registerUser.email;
         this.password = registerUser.password;
         this.companyId ="";

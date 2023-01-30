@@ -14,8 +14,8 @@ export class RegisterComponent implements OnInit {
   registerModal = new Register();
   confirmPassword:string= '';
   form = {
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     email: '',
     userPassword: '',
     userConfirmPassword: '',

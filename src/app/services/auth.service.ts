@@ -9,7 +9,7 @@ import { CompanyProfileModel } from '../models/company-profile';
   providedIn: 'root'
 })
 export class AuthService {
-private _registerUrl = environment.API_URL+"/users";
+private _registerUrl = environment.API_URL+"/user-registeration";
  private _loginUrl = environment.API_URL+"/users/login";
  private _myInfoUrl = environment.API_URL+"/users/me";
  private _generateTokenUrl = environment.API_URL+"/users/token";
