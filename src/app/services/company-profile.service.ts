@@ -7,16 +7,16 @@ import { TokenStorageService } from './token-storage.service';
   providedIn: 'root'
 })
 export class CompanyProfileService {
-  private _addCompanyUrl = environment.API_URL+"/company";
+  private _addCompanyUrl = environment.API_URL+"/create-client";
  
   constructor(private http: HttpClient,private _token:TokenStorageService) { }
   
 
-  addCompany(company :CompanyProfileModel){
+  addCompany(company :any){
     const token=JSON.parse(this._token.getToken()); 
     if(token != null){
       const headers = new HttpHeaders({
-        'authorization': `${token.token}`
+        'authorization': `Bearer ${token.token}`
       })
     
      return this.http.post<CompanyProfileModel>(this._addCompanyUrl,company, {'headers': headers });

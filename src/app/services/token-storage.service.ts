@@ -37,7 +37,7 @@ async deleteToken(token){
     });
     return promise;
   }
-  public saveToken(token: Token): void {
+  public saveToken(token: any): void {
     window.localStorage.removeItem(TOKEN_KEY);
     window.localStorage.setItem(TOKEN_KEY, JSON.stringify(token));
   }
@@ -45,7 +45,7 @@ async deleteToken(token){
   public getToken(): string | null {
     return window.localStorage.getItem(TOKEN_KEY);
   }
-  public saveUser(token: Token): void {
+  public saveUser(token: any): void {
    
   }
   public getUser(): any {

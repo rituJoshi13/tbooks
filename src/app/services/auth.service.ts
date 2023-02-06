@@ -10,32 +10,25 @@ import { CompanyProfileModel } from '../models/company-profile';
 })
 export class AuthService {
 private _registerUrl = environment.API_URL+"/user-registeration";
- private _loginUrl = environment.API_URL+"/users/login";
+ private _loginUrl = environment.API_URL+"/login";
  private _myInfoUrl = environment.API_URL+"/users/me";
  private _generateTokenUrl = environment.API_URL+"/users/token";
  private _generateTokenVerifyUrl= environment.API_URL+"/users/tokenexist";
 
-
   constructor(private http: HttpClient, private _token:TokenStorageService,) { }
-
- 
-async authStatus(){
+  authStatus(){
     const token = JSON.parse(this._token.getToken());
-   
     if(!token) return false;
-
     if (this.tokenExpired(token.token)) {
-      if(!await this.refreshToken(token)){
         return false;
-      }
     }
-    if(!token.isLoggedIn) return false;
+    if(token.is_login != 1) return false;
     return true;
   }
   companyStatus(){
     const token = JSON.parse(this._token.getToken());
     if(!token) return false;
-    if(token.companyId == ""){
+    if(token.client_id == 0){
       return false;
     }
     return true;
@@ -63,10 +56,14 @@ async authStatus(){
     return (Math.floor((new Date).getTime() / 1000)) >= expiry;
   }
   registerUser(user :Register){
-    return this.http.post<Token>(this._registerUrl,user);
+    return this.http.post<any>(this._registerUrl,user);
   }
   loginUser(user :Login){
-    return this.http.post<Token>(this._loginUrl,user);
+    return this.http.post<any>(this._loginUrl,user);
+  }
+  emailVerify(email :String){
+    var emailverifyUrl = environment.API_URL+"/send-verify-mail/"+email;
+    return this.http.get<any>(emailverifyUrl);
   }
   myInfo(){
     const token=JSON.parse(this._token.getToken()); 

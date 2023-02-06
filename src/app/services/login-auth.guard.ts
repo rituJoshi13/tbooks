@@ -17,18 +17,20 @@ export class LoginAuthGuard implements CanActivate {
         private _router: Router,
         private _token:TokenStorageService,
         private route: ActivatedRoute,) { }
-        async canActivate(
+         canActivate(
             route: ActivatedRouteSnapshot,
-            state: RouterStateSnapshot):  Promise<boolean> {
-                if(await this._auth.authStatus()){
-                    if(this._auth.companyStatus()){
+            state: RouterStateSnapshot):  boolean {
+                console.log("in auth guard");
+               /* if(this._auth.authStatus()){
+                    this._router.navigate(['/company-profile']);
+                    return false;
+                   /* if(this._auth.companyStatus()){
                         this._router.navigate(['/vendors']);
                         return false;
                     }
                     this._router.navigate(['/company-profile']);
                     return false;
-                }
-
+                }*/
                 return true;
         }
 }

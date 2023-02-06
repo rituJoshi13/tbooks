@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { TokenStorageService } from '../services/token-storage.service';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
-
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private _auth:AuthService,
-    private _token:TokenStorageService,
+  
     private _router:Router,
     private _snackBar: MatSnackBar,
 
@@ -31,27 +31,34 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
   
-  
   }
   async onSubmit() {
-  
-  if(await this.registerUser()){
-    this._router.navigate(['/company-profile']);
+    await this.registerUser()
   }
-  }
-
-
   async registerUser():Promise<boolean>{
+  
     var promise =  await new Promise<boolean>((resolve, reject) => {
       this._auth.registerUser(this.registerModal).subscribe({
-        next: (res: any) => {
-          this._token.saveToken(res);
-       
-          resolve(true);
+        next: async (res: any) => { 
+        
+          var result = await this.requestSendEmail(this.registerModal.email);
+          if(result){
+          
+            Swal.fire({
+              text: "The verification email is being sent to registered email address",
+              icon: 'succcess',
+              confirmButtonColor: '#098EE2',
+              confirmButtonText: 'OK'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this._router.navigate(['/login']);
+              }
+            })
+          }
         },
         error: (err: any) => {
         
-          this._snackBar.open(err.error.toString() , '', {
+          this._snackBar.open(err.error.message , '', {
             duration: 3000
           });
           resolve(false);
@@ -60,5 +67,22 @@ export class RegisterComponent implements OnInit {
     });
     return promise;
   }
-  
+  async requestSendEmail(email):Promise<boolean>{
+    var promise =  await new Promise<boolean>((resolve, reject) => {
+      this._auth.emailVerify(email).subscribe({
+        next: async (res: any) => { 
+         
+          resolve(true);
+        },
+        error: (err: any) => {
+        
+          this._snackBar.open(err.error.message , '', {
+            duration: 3000
+          });
+          resolve(false);
+        }
+      });
+    });
+    return promise;
+  }
 }

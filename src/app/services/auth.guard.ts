@@ -15,11 +15,11 @@ export class AuthGuard implements CanActivate {
         private _auth: AuthService,
         private _router: Router,
         private _token:TokenStorageService) { }
-        async canActivate(
+        canActivate(
             route: ActivatedRouteSnapshot,
-            state: RouterStateSnapshot):  Promise<boolean> {
+            state: RouterStateSnapshot): boolean {
 
-            if(!await this._auth.authStatus()){
+            if(!this._auth.authStatus()){
                 this._router.navigate(['']);
                 return false;
             }

@@ -13,6 +13,7 @@ import { Token } from '../models/auth';
 })
 export class CompanyProfileComponent implements OnInit {
   companyProfileModel = new CompanyProfileModel();
+  
   constructor(
     private _router: Router,
     private _auth:AuthService,
@@ -24,31 +25,35 @@ export class CompanyProfileComponent implements OnInit {
   ngOnInit(): void {
     this.me();
   }
-  async me():Promise<boolean>{
-    var promise =  await new Promise<boolean>((resolve, reject) => {
-     
-      this._auth.myInfo().subscribe({
-        next: (res: any) => {
-          this.companyProfileModel.email = res[0].email;
-          resolve(true);
-        },
-        error: (err: any) => {
-          resolve(false);
-        }
-      });
-    });
+  async me(){
+    const token = JSON.parse(this._token.getToken()); 
    
-    return promise;
+    if(token){
+      this.companyProfileModel.email = token.email;
+      this.companyProfileModel.cFirstName = token.firstname;
+      this.companyProfileModel.cLastName = token.lastname;
+    }
+    
+  
   }
   onSubmit() {
     this.addCompany();
   }
   async addCompany(){
     var promise =  await new Promise<boolean>((resolve, reject) => {
-     
-      this._company.addCompany(this.companyProfileModel).subscribe({
+     var addCompany = {
+      "compnay_name":this.companyProfileModel.companyName,
+      "contact_firstname":this.companyProfileModel.cFirstName,
+      "contact_lastname":this.companyProfileModel.cLastName,
+      "street_address":this.companyProfileModel.streetAddress,
+      "city":this.companyProfileModel.city,
+      "state":this.companyProfileModel.state,
+      "company_email":this.companyProfileModel.email,
+      "mobile_number":this.companyProfileModel.mobile,
+     }
+      this._company.addCompany(addCompany).subscribe({
         next: (res: any) => {
-          this.updateToken(res._id);
+          //this.updateToken(res._id);
           this._router.navigate(['/vendors']);
           resolve(true);
         },

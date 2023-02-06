@@ -6,13 +6,7 @@ export class Register {
     public companyId:string;
    // public userConfirmPassword?: string;
     
-    public Register(registerUser:Register){
-        this.firstname = registerUser.firstname;
-        this.firstname = registerUser.firstname;
-        this.email = registerUser.email;
-        this.password = registerUser.password;
-        this.companyId ="";
-    };
+   
 }
 export class Login {
     public email?: string;

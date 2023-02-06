@@ -13,11 +13,11 @@ import { CompanyAuthGuard } from './services/company-auth.guard';
 
 
 const routes: Routes = [
-  { path: '', component: LoginComponent,canActivate:[LoginAuthGuard]},
-  { path: 'register', component: RegisterComponent,canActivate:[LoginAuthGuard]},
-  { path: 'company-profile', component: CompanyProfileComponent,canActivate:[CompanyAuthGuard] },
-  { path: 'vendors', component: VendorsComponent ,canActivate:[AuthGuard]},
-  { path: 'home', component: HomeComponent,canActivate:[AuthGuard] },
+  { path: '', component: LoginComponent},
+  { path: 'register', component: RegisterComponent},
+  { path: 'company-profile', component: CompanyProfileComponent},
+  { path: 'vendors', component: VendorsComponent},
+  { path: 'home', component: HomeComponent },
   { path: 'loader', component: LoaderComponent, },
   { path: '**', component: LoginComponent },
 ];

@@ -18,7 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { AuthService } from './services/auth.service';
 import { TokenStorageService } from './services/token-storage.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -26,6 +26,7 @@ import { LoaderComponent } from './loader/loader.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CompanyAuthGuard } from './services/company-auth.guard';
 import { LoginAuthGuard } from './services/login-auth.guard';
+import { LoadingInterceptor } from './services/loading.interceptor';
 
 
 @NgModule({
@@ -60,7 +61,9 @@ import { LoginAuthGuard } from './services/login-auth.guard';
     AuthGuard,
     CompanyAuthGuard,
     LoginAuthGuard,
- 
+    {
+      provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
