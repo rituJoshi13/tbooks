@@ -13,7 +13,7 @@ import { Token } from '../models/auth';
 })
 export class CompanyProfileComponent implements OnInit {
   companyProfileModel = new CompanyProfileModel();
-  
+  allStates=[];
   constructor(
     private _router: Router,
     private _auth:AuthService,
@@ -24,6 +24,7 @@ export class CompanyProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.me();
+    this.getState();
   }
   async me(){
     const token = JSON.parse(this._token.getToken()); 
@@ -36,6 +37,22 @@ export class CompanyProfileComponent implements OnInit {
     
   
   }
+  async getState(){
+    var promise =  await new Promise<boolean>((resolve, reject) => {
+       this._company.getAllState().subscribe({
+         next: (res: any) => {
+          this.allStates=res;
+          console.log(this.allStates);
+           resolve(true);
+         },
+         error: (err: any) => {
+           resolve(false);
+         }
+       });
+     });
+    
+     return promise;
+   }
   onSubmit() {
     this.addCompany();
   }

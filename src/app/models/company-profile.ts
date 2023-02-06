@@ -4,7 +4,7 @@ export class CompanyProfileModel {
     public cLastName?: string;
     public streetAddress?: string;
     public city?: string;
-    public state?: string;
+    public state?: string ;
     public email?: string;
     public mobile?: string;
     public Register(registerUser:CompanyProfileModel){

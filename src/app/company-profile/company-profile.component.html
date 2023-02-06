@@ -71,15 +71,19 @@
           </div>
 
           <div class="form-group">
-            <input
-              type="text"
+            <select
+              name="drinks"
               class="form-control"
               [(ngModel)]="companyProfileModel.state"
               name="state"
               #state="ngModel"
               required
-              placeholder="State"
-            />
+            >
+              <option [ngValue]="undefined" disabled selected hidden>State</option>
+              <option *ngFor="let states of allStates" [value]="states.state_id">
+                {{ states.state_name }}
+              </option>
+            </select>
             <span
               class="text-danger"
               *ngIf="(state.touched || companyProfileForm.submitted) && state.errors?.required"

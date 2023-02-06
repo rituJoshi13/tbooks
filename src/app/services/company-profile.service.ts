@@ -8,7 +8,7 @@ import { TokenStorageService } from './token-storage.service';
 })
 export class CompanyProfileService {
   private _addCompanyUrl = environment.API_URL+"/create-client";
- 
+  private _statesUrl = environment.API_URL+"/all-state";
   constructor(private http: HttpClient,private _token:TokenStorageService) { }
   
 
@@ -24,4 +24,14 @@ export class CompanyProfileService {
     
    
   }
+  getAllState(){
+    const token=JSON.parse(this._token.getToken()); 
+    if(token != null){
+      const headers = new HttpHeaders({
+        'authorization': `Bearer ${token.token}`
+      })
+    
+      return this.http.get<any>(this._statesUrl, {'headers': headers });
+  }
+}
 }
