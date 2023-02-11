@@ -19,7 +19,7 @@ export class CompanyAuthGuard implements CanActivate {
             route: ActivatedRouteSnapshot,
             state: RouterStateSnapshot):  Promise<boolean> {
          
-            if(!await this._auth.authStatus()){
+            if(!this._auth.authStatus()){
                 this._router.navigate(['']);
                 return false;
             }

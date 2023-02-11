@@ -8,17 +8,18 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class VendorService {
-  private _addVendorUrl = environment.API_URL+"/vendor";
-  private _getVendorUrl = environment.API_URL+"/vendor/vendorbycompany";
+  private _addVendorUrl = environment.API_URL+"/create-vendor";
+  private _getVendorUrl = environment.API_URL+"/vendorby-client";
+  private _getCompanyByIdUrl = environment.API_URL+"/client-info";
   constructor(
     private http: HttpClient,
     private _token:TokenStorageService
     ) { }
-  addVendor(vendor :VendorProfileModel){
+    addVendorApi(vendor :VendorProfileModel){
     const token=JSON.parse(this._token.getToken()); 
     if(token != null){
       const headers = new HttpHeaders({
-        'authorization': `${token.token}`
+        'authorization': `Bearer ${token.token}`
       })
     
      return this.http.post<VendorProfileModel>(this._addVendorUrl,vendor, {'headers': headers });
@@ -28,10 +29,19 @@ export class VendorService {
     const token=JSON.parse(this._token.getToken()); 
     if(token != null){
       const headers = new HttpHeaders({
-        'authorization': `${token.token}`
+        'authorization':  `Bearer ${token.token}`
       })
     
-     return this.http.get<VendorProfileModel>(this._getVendorUrl, {'headers': headers });
+     return this.http.get<VendorProfileModel>((this._getVendorUrl+`/${token.client_id}`), {'headers': headers });
   }
+}
+getCompanyById(){
+  const token=JSON.parse(this._token.getToken()); 
+  if(token != null){
+    const headers = new HttpHeaders({
+      'authorization':  `Bearer ${token.token}`
+    })
+    return this.http.get<any>((this._getCompanyByIdUrl+`/${token.client_id}`), {'headers': headers });
+}
 }
 }

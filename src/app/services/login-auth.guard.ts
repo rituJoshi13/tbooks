@@ -21,6 +21,15 @@ export class LoginAuthGuard implements CanActivate {
             route: ActivatedRouteSnapshot,
             state: RouterStateSnapshot):  boolean {
                 console.log("in auth guard");
+                if(this._auth.authStatus()){
+                    if(this._auth.companyStatus()){
+                        this._router.navigate(['/vendors']);
+                        return false;
+                    }
+                    this._router.navigate(['/company-profile']);
+                    return false;
+                }
+                return true;
                /* if(this._auth.authStatus()){
                     this._router.navigate(['/company-profile']);
                     return false;

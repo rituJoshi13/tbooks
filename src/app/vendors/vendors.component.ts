@@ -10,6 +10,10 @@ import {
   import { VendorProfileModel } from '../models/vendor-profile';
 
 import { VendorService } from '../services/vendor.service';
+import { TokenStorageService } from '../services/token-storage.service';
+import { CompanyProfileService } from '../services/company-profile.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
 @Component({
   selector: 'app-vendors',
   templateUrl: './vendors.component.html',
@@ -23,17 +27,22 @@ export class VendorsComponent implements OnInit {
   public gridOptions: GridOptions;
   public rowData: Array<any>;
   public vendorData: Array<VendorProfileModel>;
+  public companyName='';
+
+  allStates=[];
   constructor(
     private modalService: NgbModal,
-    
+    private _token:TokenStorageService,
     private _vendor:VendorService,
-  
+    private _company:CompanyProfileService,
     ) { }
   closeResult = '';
   ngOnInit(): void {
+    this.getState();
+    this.getCompanyInfo();
     this.gridOptions = {
       columnDefs: [
-        { headerName:'Vendor Name',field: 'companyName',  flex: 1,filter: 'agTextColumnFilter' },
+        { headerName:'Vendor Name',field: 'vendorName',  flex: 1,filter: 'agTextColumnFilter' },
         { headerName:'Pending Files',field: 'pendingFiles', flex: 1, type: 'rightAligned',cellRenderer: (params: ICellRendererParams) => {
           params.data    // here the data is the row object you need
           return `<a href="YOUR_URL/${params.data.PrndingFiles}">${params.value}</a>`;
@@ -47,6 +56,39 @@ export class VendorsComponent implements OnInit {
       pagination: true
     }
   }
+  async getCompanyInfo(){
+    var promise =  await new Promise<boolean>((resolve, reject) => {
+       this._vendor.getCompanyById().subscribe({
+         next: (res: any) => {
+          this.companyName = res[0].compnay_name;
+          
+          console.log(res);
+           resolve(true);
+         },
+         error: (err: any) => {
+           resolve(false);
+         }
+       });
+     });
+    
+     return promise;
+   }
+  async getState(){
+    var promise =  await new Promise<boolean>((resolve, reject) => {
+       this._company.getAllState().subscribe({
+         next: (res: any) => {
+          this.allStates=res;
+          console.log(this.allStates);
+           resolve(true);
+         },
+         error: (err: any) => {
+           resolve(false);
+         }
+       });
+     });
+    
+     return promise;
+   }
 	open(content) {
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
 	}
@@ -57,8 +99,12 @@ export class VendorsComponent implements OnInit {
     this.getVendorData();
   }
  async getVendorData(){
+  var rowData = [];
     this.vendorData = await this.getVendorDataFromApi();
-
+    this.vendorData.forEach((key, value) => {
+      rowData.push({'vendorName':key['vendor_name']});
+     });
+     this.gridOptions.api.setRowData(rowData);
   }
   async getVendorDataFromApi(){
     var promise =  await new Promise<VendorProfileModel[]>((resolve, reject) => {
@@ -77,17 +123,37 @@ export class VendorsComponent implements OnInit {
     return promise;
   }
   onSubmit() {
-   
-    this._vendor.addVendor(this.vendorProfileModel).subscribe({
-      next: (v) => {
-        
-        this.modalService.dismissAll();
-      },
-      error: (e) => {
-      console.log(e);
-      }
-  });
-   
+    this.addVendor();
+  
   }
-	
+	async addVendor(){
+    var myVendor ={
+      "vendor_name":this.vendorProfileModel.vendor_name,
+      "gst_number":this.vendorProfileModel.gst_number,
+      "state":this.vendorProfileModel.state,
+      "ledger_name":"ritu",
+      "ledger_type":"joshi"
+    }
+    var promise =  await new Promise<VendorProfileModel>((resolve, reject) => {
+     
+      this._vendor.addVendorApi(myVendor).subscribe({
+        next: (res: any) => {
+          this.modalService.dismissAll();
+          Swal.fire({
+            text: "The Vendor is added",
+            icon: 'succcess',
+            confirmButtonColor: '#098EE2',
+            confirmButtonText: 'OK'
+          })
+          this.getVendorData();
+          resolve(res);
+        },
+        error: (err: any) => {
+        
+          resolve(err);
+        }
+      });
+    });
+    return promise;
+  }
 }

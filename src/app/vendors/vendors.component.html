@@ -3,7 +3,7 @@
     <div class="home-head-inner">
       <div class="head-left">
         <img src="../../assets/images/main-logo.png" class="home-logo" />
-        <h3>Apollo Infotech</h3>
+        <h3>{{ companyName }}</h3>
       </div>
     </div>
   </div>
@@ -50,7 +50,7 @@
         <input
           type="text"
           class="form-control"
-          [(ngModel)]="vendorProfileModel.vendorName"
+          [(ngModel)]="vendorProfileModel.vendor_name"
           name="vendorName"
           #vendorName="ngModel"
           required
@@ -67,22 +67,26 @@
         <input
           type="text"
           class="form-control"
-          [(ngModel)]="vendorProfileModel.gstNumber"
+          [(ngModel)]="vendorProfileModel.gst_number"
           name="gstNumber"
           #gstNumber="ngModel"
           placeholder="GST Number"
         />
       </div>
       <div class="form-group">
-        <input
-          type="text"
+        <select
+          name="drinks"
           class="form-control"
           [(ngModel)]="vendorProfileModel.state"
           name="state"
           #state="ngModel"
           required
-          placeholder="State"
-        />
+        >
+          <option [ngValue]="undefined" disabled selected hidden>State</option>
+          <option *ngFor="let states of allStates" [value]="states.state_id">
+            {{ states.state_name }}
+          </option>
+        </select>
         <span
           class="text-danger"
           *ngIf="(state.touched || vendorProfileForm.submitted) && state.errors?.required"
