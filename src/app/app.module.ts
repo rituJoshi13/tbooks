@@ -27,6 +27,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CompanyAuthGuard } from './services/company-auth.guard';
 import { LoginAuthGuard } from './services/login-auth.guard';
 import { LoadingInterceptor } from './services/loading.interceptor';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -63,6 +64,10 @@ import { LoadingInterceptor } from './services/loading.interceptor';
     LoginAuthGuard,
     {
       provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+    
+    },
+    {
+    provide: LocationStrategy, useClass: PathLocationStrategy 
     }
   ],
   bootstrap: [AppComponent]
