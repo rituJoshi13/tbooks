@@ -70,7 +70,7 @@ export class CompanyProfileComponent implements OnInit {
      }
       this._company.addCompany(addCompany).subscribe({
         next: (res: any) => {
-          //this.updateToken(res._id);
+          this.updateToken(res._id);
           this._router.navigate(['/vendors']);
           resolve(true);
         },
@@ -92,7 +92,7 @@ export class CompanyProfileComponent implements OnInit {
       token:token.token
     }
     this._token.signOut();
-    this._token.saveToken(newToken as Token);
+    this._token.saveToken(newToken as any);
    
   }
 }
