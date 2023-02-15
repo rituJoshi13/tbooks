@@ -81,8 +81,8 @@ export class LoginComponent implements OnInit {
           resolve(true);
         },
         error: (err: any) => {
-         
-          this._snackBar.open(err.error.message.toString() , '', {
+       
+          this._snackBar.open(err.message.toString() , '', {
             duration: 3000
           });
         
