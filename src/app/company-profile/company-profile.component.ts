@@ -72,7 +72,8 @@ export class CompanyProfileComponent implements OnInit {
      }
       this._company.addCompany(addCompany).subscribe({
         next: (res: any) => {
-          this.updateToken(res._id);
+          console.log(res);
+          this.updateToken(res.user.client_master_id);
          
           resolve(true);
         },
@@ -89,11 +90,12 @@ export class CompanyProfileComponent implements OnInit {
     const newToken={
       "token":token.token,
       "firstname" :token.firstname,
-      "lastname" :token.lastnme,
+      "lastname" :token.lastname,
       "is_login" :token.is_login,
       "email":token.email,
       "client_id":id
     }
+    console.log(newToken);
     this._token.signOut();
     this._token.saveToken(newToken as any);
    

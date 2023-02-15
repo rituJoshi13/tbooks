@@ -60,6 +60,7 @@ export class VendorsComponent implements OnInit {
     var promise =  await new Promise<boolean>((resolve, reject) => {
        this._vendor.getCompanyById().subscribe({
          next: (res: any) => {
+          
           this.companyName = res[0].compnay_name;
           
           console.log(res);
@@ -131,8 +132,7 @@ export class VendorsComponent implements OnInit {
       "vendor_name":this.vendorProfileModel.vendor_name,
       "gst_number":this.vendorProfileModel.gst_number,
       "state":this.vendorProfileModel.state,
-      "ledger_name":"ritu",
-      "ledger_type":"joshi"
+    
     }
     var promise =  await new Promise<VendorProfileModel>((resolve, reject) => {
      
