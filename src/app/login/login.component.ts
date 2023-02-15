@@ -59,8 +59,10 @@ export class LoginComponent implements OnInit {
   async onSubmit() {
   
     if(await this.loginUser()){
-      this._router.navigate(['/company-profile']);
+      this._router.navigate(['/company-profile']);       
     }
+     
+  
  
   }
   async loginUser():Promise<boolean>{
@@ -68,21 +70,23 @@ export class LoginComponent implements OnInit {
      
       this._auth.loginUser(this.loginModal).subscribe({
         next: (res: any) => {
+       
           var myInfo={
             "token":res.authorisation.token,
             "firstname" :res.user.firstname,
             "lastname" :res.user.lastname,
-            "is_login" : res.user.is_login,
+            "is_login" :"1",
             "email":res.user.email,
             "client_id":res.user.client_id
           }
         
-          this._token.saveToken(myInfo);         
+          this._token.saveToken(myInfo);  
+        
           resolve(true);
         },
         error: (err: any) => {
-       
-          this._snackBar.open(err.message.toString() , '', {
+    
+          this._snackBar.open(err.error.message.toString() , '', {
             duration: 3000
           });
         

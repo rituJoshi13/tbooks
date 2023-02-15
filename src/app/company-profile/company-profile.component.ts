@@ -53,8 +53,10 @@ export class CompanyProfileComponent implements OnInit {
     
      return promise;
    }
-  onSubmit() {
-    this.addCompany();
+  async onSubmit() {
+    if(await this.addCompany()){
+      this._router.navigate(['/vendors']);
+    }
   }
   async addCompany(){
     var promise =  await new Promise<boolean>((resolve, reject) => {
@@ -71,7 +73,7 @@ export class CompanyProfileComponent implements OnInit {
       this._company.addCompany(addCompany).subscribe({
         next: (res: any) => {
           this.updateToken(res._id);
-          this._router.navigate(['/vendors']);
+         
           resolve(true);
         },
         error: (err: any) => {
@@ -85,11 +87,12 @@ export class CompanyProfileComponent implements OnInit {
   updateToken(id:string){
     const token=JSON.parse(this._token.getToken()); 
     const newToken={
-      firstName:token.firstName,
-      lastName:token.lastName,
-      companyId:id,
-      isLoggedIn:token.isLoggedIn,
-      token:token.token
+      "token":token.token,
+      "firstname" :token.firstname,
+      "lastname" :token.lastnme,
+      "is_login" :token.is_login,
+      "email":token.email,
+      "client_id":id
     }
     this._token.signOut();
     this._token.saveToken(newToken as any);
