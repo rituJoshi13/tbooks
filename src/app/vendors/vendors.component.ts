@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import {
 	ColDef,
@@ -19,7 +19,10 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   templateUrl: './vendors.component.html',
   styleUrls: ['./vendors.component.scss']
 })
+
 export class VendorsComponent implements OnInit {
+  @ViewChild('content') content;
+  
   vendorProfileModel = new VendorProfileModel();
   private gridApi: GridApi;
   private gridColumnApi: any;
@@ -28,7 +31,7 @@ export class VendorsComponent implements OnInit {
   public rowData: Array<any>;
   public vendorData: Array<VendorProfileModel>;
   public companyName='';
-
+  public vendorId="";
   allStates=[];
   constructor(
     private modalService: NgbModal,
@@ -42,6 +45,7 @@ export class VendorsComponent implements OnInit {
     this.getCompanyInfo();
     this.gridOptions = {
       columnDefs: [
+        { headerName:'Vendor Id',field: 'vendorId',  flex: 1,filter: 'agTextColumnFilter',hide:true },
         { headerName:'Vendor Name',field: 'vendorName',  flex: 1,filter: 'agTextColumnFilter' },
         { headerName:'Pending Files',field: 'pendingFiles', flex: 1, type: 'rightAligned',cellRenderer: (params: ICellRendererParams) => {
           params.data    // here the data is the row object you need
@@ -51,9 +55,37 @@ export class VendorsComponent implements OnInit {
           params.data    // here the data is the row object you need
           return `<a href="YOUR_URL/${params.data.TotalLedgers}">${params.value}</a>`;
        }},
-        { headerName:'Action',field: 'action', maxWidth:160,cellRenderer: (params) => { return '<div class="icon-wrapper"><span class="material-icons">edit</span><span class="material-icons"><span class="material-symbols-outlined">delete</span></span><span class="material-icons">downloading</span></div>'; }}
+        { headerName:'Action',field: 'action', maxWidth:160,cellRenderer: (params) => { 
+         
+          return `<div class="icon-wrapper"><button data-action="edit" class="material-icons" >edit</button><span class="material-icons"><span class="material-symbols-outlined">delete</span></span><a href="/home?vId=${params.data.vendorId}" class="material-icons">downloading</a></div>`; }}
       ],
       pagination: true
+    }
+  } 
+  
+  onCellClicked(params) {
+    // Handle click event for action cells
+    
+    if (params.column.colId === "action" && params.event.target.dataset.action) {
+      let action = params.event.target.dataset.action;
+      console.log(params.data.vendorId);
+      if (action === "edit") {
+        this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title' });
+      }
+
+      if (action === "delete") {
+        params.api.applyTransaction({
+          remove: [params.node.data]
+        });
+      }
+
+      if (action === "update") {
+        params.api.stopEditing(false);
+      }
+
+      if (action === "cancel") {
+        params.api.stopEditing(true);
+      }
     }
   }
   async getCompanyInfo(){
@@ -103,7 +135,7 @@ export class VendorsComponent implements OnInit {
   var rowData = [];
     this.vendorData = await this.getVendorDataFromApi();
     this.vendorData.forEach((key, value) => {
-      rowData.push({'vendorName':key['vendor_name']});
+      rowData.push({'vendorId':key['customer_vendor_id'],'vendorName':key['vendor_name']});
      });
      this.gridOptions.api.setRowData(rowData);
   }
@@ -112,7 +144,7 @@ export class VendorsComponent implements OnInit {
      
       this._vendor.getVendors().subscribe({
         next: (res: any) => {
-       console.log(res);
+          console.log(res)
           resolve(res);
         },
         error: (err: any) => {

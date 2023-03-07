@@ -7,8 +7,10 @@ import {
   GridApi
   } from "ag-grid-community";
   import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-  import { AddLedgerModel } from '../models/vendor-profile';
+  import { AddLedgerModel, VendorProfileModel } from '../models/vendor-profile';
   import * as XLSX from 'xlsx';
+import { VendorService } from '../services/vendor.service';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,8 +23,15 @@ export class HomeComponent implements OnInit {
   public modules: any;
   public gridOptions: GridOptions;
   public rowData: Array<any>;
- 
-  constructor(private modalService: NgbModal) {
+  allVendors=[];
+  myVendorId="";
+
+  constructor(
+    private modalService: NgbModal,
+    private _vendor:VendorService,
+    private route: ActivatedRoute,
+    private _router:Router,
+    ) {
       this.gridOptions = {
         columnDefs: [
           { headerName:'Ledger Name',field: 'ledgerName',  flex: 1,filter: 'agTextColumnFilter' },
@@ -33,7 +42,30 @@ export class HomeComponent implements OnInit {
   }
    
   ngOnInit(): void {
-  }
+    this.getVendors();
+        this.route.queryParams
+        .subscribe(params => {
+          this.myVendorId = params.vId;
+        }
+      );
+    }
+  async getVendors(){
+    var promise =  await new Promise<VendorProfileModel[]>((resolve, reject) => {
+     
+      this._vendor.getVendors().subscribe({
+        next: (res: any) => {
+          console.log(res)
+          this.allVendors = res;
+          resolve(res);
+        },
+        error: (err: any) => {
+        
+          resolve([]);
+        }
+      });
+    });
+    return promise;
+   }
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;   
@@ -71,6 +103,11 @@ export class HomeComponent implements OnInit {
   onSubmit() {
     alert('Form Submitted succesfully!!!\n Check the values in browser console.');
     console.log(this.addLedgerModel);
+  }
+  vendorChanged(event: Event){
+   var myId=((event.target as HTMLInputElement).value);
+  
+    this._router.navigate(['/home'],{ queryParams: { vId:`${myId}` } });
   }
 
 }

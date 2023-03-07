@@ -24,6 +24,7 @@
             [modules]="modules"
             (gridReady)="onGridReady($event)"
             autoSizeAllColumns="true"
+            (cellClicked)="onCellClicked($event)"
           ></ag-grid-angular>
         </div>
       </div>
@@ -75,7 +76,6 @@
       </div>
       <div class="form-group">
         <select
-          name="drinks"
           class="form-control"
           [(ngModel)]="vendorProfileModel.state"
           name="state"
