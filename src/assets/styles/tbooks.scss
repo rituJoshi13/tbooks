@@ -465,6 +465,9 @@ main.auth{
     min-width: 100px;
     padding: 0 10px;
 }
+.swal2-actions{
+  gap:10px;
+}
 @media screen and (max-width:1300px){
   .right-side{
     padding:3em;

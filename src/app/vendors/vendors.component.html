@@ -82,7 +82,7 @@
           #state="ngModel"
           required
         >
-          <option [ngValue]="undefined" disabled selected hidden>State</option>
+          <option [ngValue]="undefined" disabled hidden>State</option>
           <option *ngFor="let states of allStates" [value]="states.state_id">
             {{ states.state_name }}
           </option>

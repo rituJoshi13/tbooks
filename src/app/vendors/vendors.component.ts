@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import {
 	ColDef,
@@ -22,7 +22,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 export class VendorsComponent implements OnInit {
   @ViewChild('content') content;
-  
+
   vendorProfileModel = new VendorProfileModel();
   private gridApi: GridApi;
   private gridColumnApi: any;
@@ -32,6 +32,9 @@ export class VendorsComponent implements OnInit {
   public vendorData: Array<VendorProfileModel>;
   public companyName='';
   public vendorId="";
+  public myState ;
+  public isEditing = false;
+  public myVendorId="";
   allStates=[];
   constructor(
     private modalService: NgbModal,
@@ -41,12 +44,15 @@ export class VendorsComponent implements OnInit {
     ) { }
   closeResult = '';
   ngOnInit(): void {
+   
     this.getState();
     this.getCompanyInfo();
     this.gridOptions = {
       columnDefs: [
         { headerName:'Vendor Id',field: 'vendorId',  flex: 1,filter: 'agTextColumnFilter',hide:true },
         { headerName:'Vendor Name',field: 'vendorName',  flex: 1,filter: 'agTextColumnFilter' },
+        { headerName:'GST Number',field: 'gstNumber',  flex: 1 ,hide:true},
+        { headerName:'State',field: 'state',  flex: 1 ,hide:true},
         { headerName:'Pending Files',field: 'pendingFiles', flex: 1, type: 'rightAligned',cellRenderer: (params: ICellRendererParams) => {
           params.data    // here the data is the row object you need
           return `<a href="YOUR_URL/${params.data.PrndingFiles}">${params.value}</a>`;
@@ -57,7 +63,7 @@ export class VendorsComponent implements OnInit {
        }},
         { headerName:'Action',field: 'action', maxWidth:160,cellRenderer: (params) => { 
          
-          return `<div class="icon-wrapper"><button data-action="edit" class="material-icons" >edit</button><span class="material-icons"><span class="material-symbols-outlined">delete</span></span><a href="/home?vId=${params.data.vendorId}" class="material-icons">downloading</a></div>`; }}
+          return `<div class="icon-wrapper"><button data-action="edit" class="material-icons" >edit</button><button data-action="delete" class="material-icons">delete</button><a href="/home?vId=${params.data.vendorId}" class="material-icons">downloading</a></div>`; }}
       ],
       pagination: true
     }
@@ -68,15 +74,49 @@ export class VendorsComponent implements OnInit {
     
     if (params.column.colId === "action" && params.event.target.dataset.action) {
       let action = params.event.target.dataset.action;
-      console.log(params.data.vendorId);
+      
       if (action === "edit") {
+        this.isEditing = true;
+        this.myVendorId = params.data.vendorId;
+        this.vendorProfileModel.vendor_name =params.data.vendorName;
+        this.vendorProfileModel.gst_number=params.data.gstNumber;
+        this.vendorProfileModel.state = params.data.state;
         this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title' });
       }
 
       if (action === "delete") {
-        params.api.applyTransaction({
-          remove: [params.node.data]
-        });
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+          },
+          buttonsStyling: false
+        })
+        
+        swalWithBootstrapButtons.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, cancel!',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.destroyVendor(params.data.vendorId);
+          
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire(
+              'Cancelled',
+              'Your vendor is safe :)',
+              'error'
+            )
+          }
+        })
+       
       }
 
       if (action === "update") {
@@ -95,7 +135,7 @@ export class VendorsComponent implements OnInit {
           
           this.companyName = res[0].compnay_name;
           
-          console.log(res);
+        
            resolve(true);
          },
          error: (err: any) => {
@@ -111,7 +151,7 @@ export class VendorsComponent implements OnInit {
        this._company.getAllState().subscribe({
          next: (res: any) => {
           this.allStates=res;
-          console.log(this.allStates);
+        
            resolve(true);
          },
          error: (err: any) => {
@@ -123,6 +163,7 @@ export class VendorsComponent implements OnInit {
      return promise;
    }
 	open(content) {
+    this.clearFields();
 		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
 	}
   onGridReady(params) {
@@ -135,7 +176,12 @@ export class VendorsComponent implements OnInit {
   var rowData = [];
     this.vendorData = await this.getVendorDataFromApi();
     this.vendorData.forEach((key, value) => {
-      rowData.push({'vendorId':key['customer_vendor_id'],'vendorName':key['vendor_name']});
+      rowData.push(
+        {'vendorId':key['customer_vendor_id'],
+         'vendorName':key['vendor_name'],
+         'gstNumber':key['gst_number'],
+         'state':key['state'],
+      });
      });
      this.gridOptions.api.setRowData(rowData);
   }
@@ -144,7 +190,7 @@ export class VendorsComponent implements OnInit {
      
       this._vendor.getVendors().subscribe({
         next: (res: any) => {
-          console.log(res)
+          
           resolve(res);
         },
         error: (err: any) => {
@@ -156,13 +202,20 @@ export class VendorsComponent implements OnInit {
     return promise;
   }
   onSubmit() {
-    this.addVendor();
+    this.isEditing ? this.updateVendor(this.myVendorId): this.addVendor();
+
+   
   
+  }
+  clearFields(){
+    this.vendorProfileModel.vendor_name ="";
+    this.vendorProfileModel.gst_number="";
+    this.vendorProfileModel.state=undefined;
   }
 	async addVendor(){
     var myVendor ={
       "vendor_name":this.vendorProfileModel.vendor_name,
-      "gst_number":this.vendorProfileModel.gst_number,
+      "gst_number":this.vendorProfileModel.gst_number ?? " ",
       "state":this.vendorProfileModel.state,
     
     }
@@ -177,11 +230,77 @@ export class VendorsComponent implements OnInit {
             confirmButtonColor: '#098EE2',
             confirmButtonText: 'OK'
           })
+        this. clearFields();
           this.getVendorData();
           resolve(res);
         },
         error: (err: any) => {
         
+          resolve(err);
+        }
+      });
+    });
+    return promise;
+  }
+  async updateVendor(vendorId:string){
+    var myVendor ={
+      "vendor_name":this.vendorProfileModel.vendor_name,
+      "gst_number":this.vendorProfileModel.gst_number ?? " ",
+      "state":this.vendorProfileModel.state,
+    
+    }
+    var promise =  await new Promise<VendorProfileModel>((resolve, reject) => {
+     
+      this._vendor.updateVendorApi(vendorId,myVendor).subscribe({
+        next: (res: any) => {
+          this.modalService.dismissAll();
+          Swal.fire({
+            text: "The Vendor is updated",
+            icon: 'succcess',
+            confirmButtonColor: '#098EE2',
+            confirmButtonText: 'OK'
+          })
+          this.isEditing =false;
+        this. clearFields();
+          this.getVendorData();
+          resolve(res);
+        },
+        error: (err: any) => {
+          Swal.fire({
+            text: "The Vendor is not updated",
+            icon: 'error',
+            confirmButtonColor: '#ff0000',
+            confirmButtonText: 'OK'
+          })
+          resolve(err);
+        }
+      });
+    });
+    return promise;
+  }
+  async destroyVendor(vendorId:string){
+   
+    var promise =  await new Promise<VendorProfileModel>((resolve, reject) => {
+     
+      this._vendor.destroyVendorApi(vendorId).subscribe({
+        next: (res: any) => {
+         
+          Swal.fire({
+            text: "The Vendor is deleted",
+            icon: 'succcess',
+            confirmButtonColor: '#098EE2',
+            confirmButtonText: 'OK'
+          })
+          this.getVendorData();
+          resolve(res);
+        },
+        error: (err: any) => {
+          Swal.fire({
+            text: "The Vendor is not deleted",
+            icon: 'error',
+            confirmButtonColor: '#ff0000',
+            confirmButtonText: 'OK'
+          })
           resolve(err);
         }
       });

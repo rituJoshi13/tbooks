@@ -17,9 +17,9 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent,canActivate:[LoginAuthGuard]},
   { path: 'company-profile', component: CompanyProfileComponent,canActivate:[CompanyAuthGuard]},
   { path: 'vendors', component: VendorsComponent,canActivate:[AuthGuard]},
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent,canActivate:[AuthGuard] },
   { path: 'loader', component: LoaderComponent, },
-  { path: '**', component: LoginComponent },
+  { path: '**', component: LoginComponent,canActivate:[LoginAuthGuard] },
 ];
 
 @NgModule({
