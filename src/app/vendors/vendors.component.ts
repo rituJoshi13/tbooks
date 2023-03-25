@@ -38,7 +38,6 @@ export class VendorsComponent implements OnInit {
   allStates=[];
   constructor(
     private modalService: NgbModal,
-    private _token:TokenStorageService,
     private _vendor:VendorService,
     private _company:CompanyProfileService,
     ) { }

@@ -28,6 +28,7 @@ import { CompanyAuthGuard } from './services/company-auth.guard';
 import { LoginAuthGuard } from './services/login-auth.guard';
 import { LoadingInterceptor } from './services/loading.interceptor';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { UserDropdownComponent } from './user-dropdown/user-dropdown.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
     CompanyProfileComponent,
     VendorsComponent,
     HomeComponent,
-    LoaderComponent
+    LoaderComponent,
+    UserDropdownComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +58,7 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
     MatSnackBarModule,
     MatProgressSpinnerModule
   ],
+  exports: [UserDropdownComponent] ,
   providers: [
     AuthService,
     TokenStorageService,

@@ -1,0 +1,14 @@
+.dropdown-toggle::after{
+    border:0;
+    border-radius:none;
+    margin-left:0;
+}
+.dropdown-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    width:32px;
+    height:32px;
+    border-radius:100%;
+}

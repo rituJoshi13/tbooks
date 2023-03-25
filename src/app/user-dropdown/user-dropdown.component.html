@@ -1,0 +1,9 @@
+<div ngbDropdown class="user-info-wrapper">
+  <button type="button" class="profile-icon" id="dropdownBasic1" ngbDropdownToggle>
+    <span class="material-icons">person</span>
+  </button>
+  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+    <button ngbDropdownItem>View Profile</button>
+    <button ngbDropdownItem (click)="doLogout()">Logout</button>
+  </div>
+</div>

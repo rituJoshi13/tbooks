@@ -351,10 +351,7 @@ main.auth{
         @include flexy(row,flex-end,flex-start,auto,10px);
         .user-info-wrapper{
           @include flexy(column,center,center);
-          width:32px;
-          height:32px;
-          background-color:#fff;
-          border-radius:100%;
+         
         }
        }
     }
